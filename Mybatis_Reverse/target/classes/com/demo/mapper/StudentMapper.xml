@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.demo.bean.Student">
+    <id column="Sid" jdbcType="INTEGER" property="sid" />
+    <result column="Sname" jdbcType="VARCHAR" property="sname" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="Ssex" jdbcType="VARCHAR" property="ssex" />
+    <result column="classid" jdbcType="INTEGER" property="classid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    Sid, Sname, birthday, Ssex, classid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where Sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where Sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.demo.bean.Student">
+    insert into student (Sid, Sname, birthday, 
+      Ssex, classid)
+    values (#{sid,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{ssex,jdbcType=VARCHAR}, #{classid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.bean.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        Sid,
+      </if>
+      <if test="sname != null">
+        Sname,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="ssex != null">
+        Ssex,
+      </if>
+      <if test="classid != null">
+        classid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssex != null">
+        #{ssex,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null">
+        #{classid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.bean.Student">
+    update student
+    <set>
+      <if test="sname != null">
+        Sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssex != null">
+        Ssex = #{ssex,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null">
+        classid = #{classid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where Sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.bean.Student">
+    update student
+    set Sname = #{sname,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      Ssex = #{ssex,jdbcType=VARCHAR},
+      classid = #{classid,jdbcType=INTEGER}
+    where Sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

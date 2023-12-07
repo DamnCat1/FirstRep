@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.TeacherMapper">
+  <resultMap id="BaseResultMap" type="com.demo.bean.Teacher">
+    <id column="Tid" jdbcType="INTEGER" property="tid" />
+    <result column="Tname" jdbcType="VARCHAR" property="tname" />
+    <result column="Tsex" jdbcType="TINYINT" property="tsex" />
+    <result column="Tbirthday" jdbcType="DATE" property="tbirthday" />
+    <result column="Taddress" jdbcType="VARCHAR" property="taddress" />
+    <result column="Temail" jdbcType="VARCHAR" property="temail" />
+    <result column="Tmoney" jdbcType="DECIMAL" property="tmoney" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    Tid, Tname, Tsex, Tbirthday, Taddress, Temail, Tmoney
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where Tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher
+    where Tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.demo.bean.Teacher">
+    insert into teacher (Tid, Tname, Tsex, 
+      Tbirthday, Taddress, Temail, 
+      Tmoney)
+    values (#{tid,jdbcType=INTEGER}, #{tname,jdbcType=VARCHAR}, #{tsex,jdbcType=TINYINT}, 
+      #{tbirthday,jdbcType=DATE}, #{taddress,jdbcType=VARCHAR}, #{temail,jdbcType=VARCHAR}, 
+      #{tmoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.bean.Teacher">
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        Tid,
+      </if>
+      <if test="tname != null">
+        Tname,
+      </if>
+      <if test="tsex != null">
+        Tsex,
+      </if>
+      <if test="tbirthday != null">
+        Tbirthday,
+      </if>
+      <if test="taddress != null">
+        Taddress,
+      </if>
+      <if test="temail != null">
+        Temail,
+      </if>
+      <if test="tmoney != null">
+        Tmoney,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsex != null">
+        #{tsex,jdbcType=TINYINT},
+      </if>
+      <if test="tbirthday != null">
+        #{tbirthday,jdbcType=DATE},
+      </if>
+      <if test="taddress != null">
+        #{taddress,jdbcType=VARCHAR},
+      </if>
+      <if test="temail != null">
+        #{temail,jdbcType=VARCHAR},
+      </if>
+      <if test="tmoney != null">
+        #{tmoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.bean.Teacher">
+    update teacher
+    <set>
+      <if test="tname != null">
+        Tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsex != null">
+        Tsex = #{tsex,jdbcType=TINYINT},
+      </if>
+      <if test="tbirthday != null">
+        Tbirthday = #{tbirthday,jdbcType=DATE},
+      </if>
+      <if test="taddress != null">
+        Taddress = #{taddress,jdbcType=VARCHAR},
+      </if>
+      <if test="temail != null">
+        Temail = #{temail,jdbcType=VARCHAR},
+      </if>
+      <if test="tmoney != null">
+        Tmoney = #{tmoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where Tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.bean.Teacher">
+    update teacher
+    set Tname = #{tname,jdbcType=VARCHAR},
+      Tsex = #{tsex,jdbcType=TINYINT},
+      Tbirthday = #{tbirthday,jdbcType=DATE},
+      Taddress = #{taddress,jdbcType=VARCHAR},
+      Temail = #{temail,jdbcType=VARCHAR},
+      Tmoney = #{tmoney,jdbcType=DECIMAL}
+    where Tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>
